@@ -36,10 +36,14 @@
 }
 
 .name {
-    margin: auto;
+    width: 100%;
     font-family: Arial, Helvetica, sans-serif;
     font-size: x-large;
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    
     /* debugging */
     /* border: 1px solid; */
 }

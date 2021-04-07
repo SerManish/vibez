@@ -1,0 +1,27 @@
+.container {
+	height: 100%;
+	padding: 10px;
+	/* debugging */
+	/* border: 1px solid; */
+}
+
+.chat-head {
+	height: 10%;
+
+	/* debugging */
+	/* border: 1px solid; */
+}
+
+.message-area {
+	height: 80%;
+	/* debugging */
+	/* border: 1px solid; */
+}
+
+.input-area {
+	height: 10%;
+
+	/* debugging */
+	/* border: 1px solid; */
+}
+
