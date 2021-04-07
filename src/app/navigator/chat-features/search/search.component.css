@@ -1,0 +1,38 @@
+    .container {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.input{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    padding: 5px 10px;
+    background-color: #f0f3f6;
+    border-radius: 10px;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+input {
+    height: 100%;
+    width: 90%;
+    background-color: #f0f3f6;
+    padding: 0 10px;
+    color: #a6adc1;
+    font-size: 1em;
+    border: none;
+    outline: none;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+img {
+    height: 70%;
+    align-self: center;
+    /* debugging */
+    /* border: 1px solid; */
+}

@@ -1,0 +1,56 @@
+.container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    overflow: hidden;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.top {
+    display: flex;
+    height: 60%;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.profile-pic {
+    width: 100%;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.profile-pic img {
+    height: 100%;
+    display: block;
+    margin: auto;
+
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.setting {
+    padding-top: 5px;
+}
+
+.name {
+    margin: auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: x-large;
+    overflow: hidden;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.status {
+    margin: auto;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 10px;
+    background-color: #bfe8e1;
+    color: #00a389;
+    padding: 5px 10px;
+    /* debugging */
+    /* border: 1px solid; */
+}

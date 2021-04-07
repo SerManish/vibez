@@ -1,0 +1,12 @@
+<div class="container">
+    <div *ngFor="let lastChat of lastChats" class="last-chat">
+        <div class="dp">
+            <img [src]="lastChat.dpURL" alt="Display picture of {{ lastChat.name }}">
+        </div>
+        <div class="name-container">
+            <div class="name">{{ lastChat.name }}</div>
+            <div class="last-message">{{ lastChat.lastMessage }}</div>
+        </div>
+        <div class="lastTime">{{ lastChat.lastTime }}</div>
+    </div>
+</div>

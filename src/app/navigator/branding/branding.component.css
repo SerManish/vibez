@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    height: 100%;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.name {
+    margin-left: 20px;
+    align-self: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: x-large;
+    /* debugging */
+    /* border: 1px solid; */
+
+}
+
+
+
+

@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    height: 100%;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.messages {
+    background-color: #edf0f5;
+    height: 100%;
+    width: 70%;
+    border-radius: 10px;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.details {
+    background-color: #ffffff;
+    height: 100%;
+    width: 30%;
+    /* debugging */
+    /* border: 1px solid; */
+}

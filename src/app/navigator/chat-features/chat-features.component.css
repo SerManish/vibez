@@ -1,0 +1,34 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.search {
+    height: 10%;
+    margin-top: 15px;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.add-friend {
+    margin-top: 15px;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.last-chats {
+    height: 80%;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    overflow: hidden;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.search, .add-friend, .last-chats {
+    width: 100%;
+}
