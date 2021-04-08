@@ -14,6 +14,7 @@
 
 .message-area {
 	height: 80%;
+	padding-bottom: 10px;
 	/* debugging */
 	/* border: 1px solid; */
 }
