@@ -19,8 +19,8 @@ export class LastChatsComponent implements OnInit {
             },
             {
                 dpURL : '../../assets/images/default-avatar.png',
-                name : 'Manish Kumar Giri',
-                lastMessage : 'Karde, easy hai!!',
+                name : 'Manish Kumar Giri Manish Kumar Giri',
+                lastMessage : 'Karde, easy hai!! Karde, easy hai!! Karde, easy hai!!',
                 lastTime: '15:24'
             },
             {

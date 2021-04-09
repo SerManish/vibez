@@ -1,0 +1,38 @@
+.container {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+	padding: 0 5px;
+	/* debugging */
+	/* border: 1px solid; */
+}
+
+.message {
+	background-color: #ffffff;
+	border-radius: 15px;
+	padding: 10px;
+	max-width: 60%;
+	margin-top: 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	/* debugging */
+	/* border: 1px solid; */
+}
+
+.time {
+	margin-top: 2px;
+	font-size: 0.7em;
+}
+
+
+
+.left {
+	align-self: flex-start;
+	border-top-left-radius: 0;
+}
+
+.right {
+	background-color: #bfe8e1;
+	align-self: flex-end;
+	border-top-right-radius: 0;
+}

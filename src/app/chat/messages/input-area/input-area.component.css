@@ -1,0 +1,67 @@
+.container {
+	display: flex;
+	width: 98%;
+	margin: auto;
+	background-color: #ffffff;
+	border-radius: 15px;
+	padding: 10px;
+	/* debugging */
+	/* border: 1px solid; */
+}
+
+.text-area {
+	width: 90%;
+	align-self: center;
+	/* debugging */
+	/* border: 1px solid; */
+}
+
+textarea {
+	padding: 0 10px;
+	resize: none;
+	outline: none;
+	border: none;
+	width: 95%;
+	/* debugging */
+	/* border: 1px solid; */
+}
+
+.emoji-picker, .send {
+	align-self: center;
+	padding: 8px;
+	/* debugging */
+	/* border: 1px solid; */
+}
+
+.emoji-picker {
+	margin-right: 10px;
+	opacity: 50%;
+}
+
+.send {
+	background-color: #00a389;
+	color: #ffffff;
+	border-radius: 10px;
+}
+
+i {
+	font-size: 130%;
+}
+
+@media only screen and (max-height: 700px) {
+	i {
+	  font-size: 100%;
+	}
+
+	.emoji-picker, .send {
+		align-self: center;
+		padding: 3px;
+		/* debugging */
+		/* border: 1px solid; */
+	}
+
+	.send {
+		border-radius: 5px;
+	}
+
+  }
