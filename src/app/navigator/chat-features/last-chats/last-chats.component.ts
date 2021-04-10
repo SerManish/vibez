@@ -1,74 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
+import { ChatService } from 'src/app/shared/chat.service';
 import { LastChat } from '../../../shared/last-chat.model';
 
 @Component({
-    selector: 'app-last-chats',
-    templateUrl: './last-chats.component.html',
-    styleUrls: ['./last-chats.component.css']
+	selector: 'app-last-chats',
+	templateUrl: './last-chats.component.html',
+	styleUrls: ['./last-chats.component.css']
 })
-export class LastChatsComponent implements OnInit {
+export class LastChatsComponent implements OnInit, OnDestroy {
 
-    lastChats:LastChat[];
-    constructor() {
-        this.lastChats = [
-            {
-                dpURL : '../../assets/images/default-avatar.png',
-                name : 'Axay',
-                lastMessage : 'Kuch to bata zindagi',
-                lastTime: '1:00'
-            },
-            {
-                dpURL : '../../assets/images/default-avatar.png',
-                name : 'Manish Kumar Giri Manish Kumar Giri',
-                lastMessage : 'Karde, easy hai!! Karde, easy hai!! Karde, easy hai!!',
-                lastTime: '15:24'
-            },
-            {
-                dpURL : '../../assets/images/default-avatar.png',
-                name : 'Axay',
-                lastMessage : 'Kuch to bata zindagi',
-                lastTime: '21:00'
-            },
-            {
-                dpURL : '../../assets/images/default-avatar.png',
-                name : 'Axay',
-                lastMessage : 'Kuch to bata zindagi',
-                lastTime: '22:00'
-            },
-            {
-                dpURL : '../../assets/images/default-avatar.png',
-                name : 'Axay',
-                lastMessage : 'Kuch to bata zindagi',
-                lastTime: '1:00'
-            },
-            {
-                dpURL : '../../assets/images/default-avatar.png',
-                name : 'Axay',
-                lastMessage : 'Kuch to bata zindagi',
-                lastTime: '1:00'
-            },
-            {
-                dpURL : '../../assets/images/default-avatar.png',
-                name : 'Axay',
-                lastMessage : 'Kuch to bata zindagi',
-                lastTime: '1:00'
-            },
-            {
-                dpURL : '../../assets/images/default-avatar.png',
-                name : 'Axay',
-                lastMessage : 'Kuch to bata zindagi',
-                lastTime: '1:00'
-            },
-            {
-                dpURL : '../../assets/images/default-avatar.png',
-                name : 'Axay',
-                lastMessage : 'Kuch to bata zindagi',
-                lastTime: '1:00'
-            }
-        ]
+	lastChats: LastChat[];
+	chatReceivedSubscription: Subscription;
+
+	constructor(private chatService: ChatService) {
+		this.lastChats = [];
+		this.chatReceivedSubscription = chatService.chatsReceived.subscribe(()=>{
+            this.populateChats();
+        });
+	}
+
+    populateChats ()
+    {
+        this.chatService.getLocalChat().forEach(chat => {
+			this.lastChats.push(
+				new LastChat(
+					chat.id,
+					chat.participants[0].profilePicture,
+					chat.participants[0].name,
+					chat.messages[chat.messages.length - 1].messageContent,
+					chat.messages[chat.messages.length - 1].time
+				)
+			);
+		});
     }
 
-    ngOnInit(): void {
+	ngOnInit(): void {
+
+	}
+
+    loadMessages(chatId : String)
+    {
+        this.chatService.chatSwitched.next(chatId);
+    }
+
+    ngOnDestroy():void{
+        this.chatReceivedSubscription.unsubscribe();
     }
 
 }

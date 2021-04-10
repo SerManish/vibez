@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ChatService } from 'src/app/shared/chat.service';
 import { Message } from '../../../shared/message.model';
 
 @Component({
@@ -6,32 +8,26 @@ import { Message } from '../../../shared/message.model';
 	templateUrl: './message-area.component.html',
 	styleUrls: ['./message-area.component.css']
 })
-export class MessageAreaComponent implements OnInit {
+export class MessageAreaComponent implements OnInit, OnDestroy {
 	messages: Message[];
 	userID: String;
-	constructor() {
+	chatSwitchedSubscription: Subscription;
+
+	constructor(private chatService: ChatService) {
 		this.messages = [
-			new Message('1', '2', 'h', '1:00'),
-			new Message('1', '2', 'Some  sdlkjflk sd nsldf lsda flktext', '1:00'),
-			new Message('2', '1', 'Some text', '1:00'),
-			new Message('1', '2', 'Some text', '1:00'),
-			new Message('1', '2', 'Some  sadlk fj text', '1:00'),
-			new Message('1', '2', 'Some  skdljf text', '1:00'),
-			new Message('2', '1', 'Some  sdlf lksajdflk jsdlkj flkjsadlkfj lkasdjf lkjasdlkfj lkajsskdjf kdask jkdsafk ksdfj kjasdkf jkasjfdkjtext', '1:00'),
-			new Message('2', '1', 'Some text', '1:00'),
-			new Message('2', '1', 'Some text', '1:00'),
-			new Message('2', '1', 'Some text', '1:00'),
-			new Message('1', '2', 'Some text', '1:00'),
-			new Message('2', '1', 'Some text', '1:00'),
-			new Message('2', '1', 'Some text', '1:00'),
-			new Message('1', '2', 'Some text', '1:00'),
-			new Message('2', '1', 'Some text', '1:00'),
-			new Message('2', '1', 'Some text', '1:00')
+
 		];
 		this.userID = '1';
+		this.chatSwitchedSubscription = chatService.chatSwitched.subscribe((id) => {
+			this.messages = chatService.getChatByChatId(id).messages;
+		});
 	}
 
 	ngOnInit(): void {
+	}
+
+	ngOnDestroy(): void {
+		this.chatSwitchedSubscription.unsubscribe();
 	}
 
 }

@@ -1,13 +1,8 @@
 export class Message {
-    senderID: String;
-    receiverID: String;
-    messageContent: String;
-    time: String;
-    
-    constructor(senderID: String, receiverID: String, messageContent: String, time: String){
-        this.senderID = senderID;
-        this.receiverID = receiverID;
-        this. messageContent = messageContent;
-        this.time = time;
-    }
+	constructor(
+		public senderID: String,
+		public chatID: String,
+		public messageContent: String,
+		public time: Date
+	) { }
 }
