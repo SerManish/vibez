@@ -15,6 +15,7 @@ import { MessagesComponent } from './chat/messages/messages.component';
 import { MessageAreaComponent } from './chat/messages/message-area/message-area.component';
 import { InputAreaComponent } from './chat/messages/input-area/input-area.component';
 import { ChatHeadComponent } from './chat/messages/chat-head/chat-head.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ChatHeadComponent } from './chat/messages/chat-head/chat-head.component
     MessagesComponent,
     MessageAreaComponent,
     InputAreaComponent,
-    ChatHeadComponent
+    ChatHeadComponent,
+    AuthenticationComponent
   ],
   imports: [
     BrowserModule

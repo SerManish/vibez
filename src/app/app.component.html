@@ -1,4 +1,8 @@
-<div class="container">
+<div *ngIf="!loggedIn">
+	<app-authentication></app-authentication>
+</div>
+
+<div *ngIf="loggedIn" class="container">
 	<div class="navigator">
     	<app-navigator></app-navigator>
   	</div>
