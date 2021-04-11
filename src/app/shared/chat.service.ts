@@ -11,6 +11,7 @@ export class ChatService {
 	
 	chatsReceived = new Subject<any>();
 	chatSwitched = new Subject<String>();
+	lastChatUpdated = new Subject<Message>();
 	private localChats: Chat[];
 
 	constructor() {
@@ -80,5 +81,6 @@ export class ChatService {
 			return;
 		this.localChats[index].messages.push(message);
 		this.chatSwitched.next(message.chatID);
+		this.lastChatUpdated.next(message);
 	}
 }

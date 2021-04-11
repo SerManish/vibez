@@ -17,7 +17,7 @@ export class AuthenticationService {
 		setTimeout(()=>{
 			this.loggedIn = true;
 			this.loginStatus.next(true);
-		},4000);
+		},1000);
 	}
 
 	logout()
@@ -25,7 +25,7 @@ export class AuthenticationService {
 		setTimeout(()=>{
 			this.loggedIn = false;
 			this.loginStatus.next(false);
-		},4000);
+		},1000);
 	}
 
 }
