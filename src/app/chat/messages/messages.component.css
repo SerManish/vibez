@@ -1,6 +1,5 @@
 .container {
 	height: 100%;
-	padding: 10px;
 	/* debugging */
 	/* border: 1px solid; */
 }
@@ -24,5 +23,9 @@
 
 	/* debugging */
 	/* border: 1px solid; */
+}
+
+.message-area, .input-area {
+	padding: 0 10px;
 }
 

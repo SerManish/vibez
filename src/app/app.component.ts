@@ -9,7 +9,7 @@ import { AuthenticationService } from './shared/authentication.service';
 })
 export class AppComponent implements OnDestroy {
 	title = 'vibez';
-	loggedIn = false;
+	loggedIn = true;
 	loginStatusSubscription : Subscription;
 
   	constructor(private authenticationService : AuthenticationService){
