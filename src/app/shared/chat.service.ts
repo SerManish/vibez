@@ -54,9 +54,9 @@ export class ChatService {
 		return this.localChats;
 	}
 
-	getChatByChatId(chatId:String) : Chat
+	private findChatbyId(chatId : String)
 	{
-		let index = 0;
+		let index = -1;
 		for(let i = 0;i<this.localChats.length;i++)
 		{
 			if(this.localChats[i].id == chatId)
@@ -65,6 +65,20 @@ export class ChatService {
 				break;
 			}
 		}
-		return this.localChats[index];
+		return index;
+	}
+
+	getChatByChatId(chatId:String) : Chat
+	{
+		return this.localChats[this.findChatbyId(chatId)];
+	}
+
+	sendMessage(message : Message)
+	{
+		let index = this.findChatbyId(message.chatID);
+		if(index == -1)
+			return;
+		this.localChats[index].messages.push(message);
+		this.chatSwitched.next(message.chatID);
 	}
 }
