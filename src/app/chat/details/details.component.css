@@ -1,0 +1,60 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	/* debugging */
+	/* border: 1px solid; */
+}
+
+.close {
+	color: #00a389;
+	font-size: 1.5em;
+	/* opacity: 50%; */
+}
+
+.close span {
+	cursor: pointer;
+}
+
+.profile-pic {
+    width: 100%;
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.profile-pic img {
+    width: 80%;
+    display: block;
+    margin: auto;
+
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.name, .handle {
+    margin: auto;
+	max-width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5em;
+	word-wrap: break-word;
+    padding: 5px;
+
+    /* debugging */
+    /* border: 1px solid; */
+}
+
+.handle {
+	font-size: 1em;
+	color: #888;
+}
+
+.status {
+    margin: auto;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 10px;
+    background-color: #bfe8e1;
+    color: #00a389;
+    padding: 5px 10px;
+    /* debugging */
+    /* border: 1px solid; */
+}

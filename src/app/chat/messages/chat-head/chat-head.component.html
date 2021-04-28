@@ -1,1 +1,12 @@
-<p>chat-head works!</p>
+<div class="container">
+	<div class="profile-picture">
+		<img [src]="chat.participants[0].profilePicture" alt="profile-picture">
+	</div>
+	<div class="name" (click)="onDetailsOpen()">{{ chat.participants[0].name }}</div>
+	<div class="audio">
+		<i class="fas fa-phone-alt"></i>
+	</div>
+	<div class="video">
+		<i class="fas fa-video"></i>
+	</div>
+</div>

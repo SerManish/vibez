@@ -8,7 +8,7 @@
 .messages {
     background-color: #edf0f5;
     height: 100%;
-    width: 70%;
+    width: 100%;
     border-radius: 10px;
     /* debugging */
     /* border: 1px solid; */
@@ -17,7 +17,17 @@
 .details {
     background-color: #ffffff;
     height: 100%;
-    width: 30%;
+	display: none;
+	overflow: auto;
     /* debugging */
     /* border: 1px solid; */
+}
+
+.activeDetails {
+	display: block;
+	width: 30%;
+}
+
+.passiveMessages {
+	width: 70%;
 }
