@@ -33,9 +33,11 @@ const User = mongoose.model('User', {
         type: String,
         default : "offline"
     },
-	tokens: [
-		{
-			type : String
+	tokens: [{
+			token : {
+				type : String,
+				required : true
+			}
 		}
 	]
 });
