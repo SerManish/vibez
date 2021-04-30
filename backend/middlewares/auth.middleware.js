@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const User = require('../models/user.model');
 
+// checks if provided token is valid or not (time not expired and registed in user's data in db)
+// sends status code 401 if not authenticated with an error message
 module.exports = async (req,res,next) => {
     try{
         const token = req.header('Authorization').replace('Bearer ','');

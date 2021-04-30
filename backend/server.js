@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 
-const authRouter = require('./routers/authentication');
-const chatRouter = require('./routers/chat');
+const authRouter = require('./routers/authentication.router');
+const chatRouter = require('./routers/chat.router');
 
 const app = express();
 
