@@ -17,17 +17,16 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.isSubmitted = false;
-		this.authenticationService.submitted.subscribe((res) => this.isSubmitted = res);
+		this.submitSubscription = this.authenticationService.authenticating.subscribe((res) => this.isSubmitted = res);
 	}
 
 	onLogin(form: NgForm) {
-		this.authenticationService.submitted.next(true);
+		this.authenticationService.authenticating.next(true);
 		this.authenticationService.login(form.form.value);
 	}
 
 	onSignup(form: NgForm) {
-		this.authenticationService.submitted.next(true);
+		this.authenticationService.authenticating.next(true);
 		this.authenticationService.signup(form.form.value);
 	}
 

@@ -1,4 +1,4 @@
-<div *ngIf="!isSubmitted">
+<div>
 	<h1>Login</h1>
     <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
 		<p>
@@ -9,7 +9,7 @@
 			<label for="password">Password</label>
 			<input type="password" id="password" name="password" placeholder="password" required ngModel>
 		</p>
-        <button type="submit">Login</button>
+        <button [disabled]="isSubmitted" type="submit">Login</button>
     </form>
 
 	<h1>Signup</h1>
@@ -30,6 +30,6 @@
 			<label for="password">Password</label>
 			<input type="password" id="password" name="password" placeholder="password" required ngModel>
 		</p>
-        <button type="submit">Signup</button>
+        <button [disabled]="isSubmitted" type="submit">Signup</button>
     </form>
 </div>

@@ -11,15 +11,14 @@ import { ChatService } from 'src/app/shared/chat.service';
 export class ChatHeadComponent implements OnInit, OnDestroy {
 
 	chat!: Chat;
-	chatSwitchedSubscription: Subscription;
+	chatSwitchedSubscription!: Subscription;
 	
-	constructor(private chatService: ChatService) {
+	constructor(private chatService: ChatService) { }
+
+	ngOnInit(): void {
 		this.chatSwitchedSubscription = this.chatService.chatSwitched.subscribe((id)=>{
 			this.chat = this.chatService.getChatByChatId(id);
 		});
-	}
-
-	ngOnInit(): void {
 	}
 
 	ngOnDestroy(): void {
