@@ -5,14 +5,14 @@ const auth = require('../middlewares/auth.middleware')
 const router = new express.Router();
 
 // endpoint for signing up users, sends an object with 2 properties : user and token if successful(201)
-// if an error is occured it sends an error object with status code 500
+// if an error is occured it sends an error object with status code 400
 router.post('/signup', async (req, res) => {
     try {
         const user = new User(req.body);
         token = await user.generateToken();
         res.status(201).send({user, token});
     } catch (e) {
-        res.status(500).send({error : "sign up failed"});
+        res.status(400).send({error : "sign up failed"});
     }
 });
 
