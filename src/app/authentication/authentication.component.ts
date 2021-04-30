@@ -10,10 +10,12 @@ import { AuthenticationService } from '../shared/authentication.service';
 })
 export class AuthenticationComponent implements OnInit, OnDestroy {
 	isSubmitted: boolean;
+	isLoginSelected: boolean;
 	submitSubscription!: Subscription;
 
 	constructor(private authenticationService: AuthenticationService) {
 		this.isSubmitted = false;
+		this.isLoginSelected = true;
 	}
 
 	ngOnInit(): void {
@@ -28,6 +30,14 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
 	onSignup(form: NgForm) {
 		this.authenticationService.authenticating.next(true);
 		this.authenticationService.signup(form.form.value);
+	}
+
+	selectLogin() {
+		this.isLoginSelected = true;
+	}
+
+	selectSignup() {
+		this.isLoginSelected = false;
 	}
 
 	ngOnDestroy(): void {

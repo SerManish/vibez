@@ -12,6 +12,10 @@
     /* border: 1px solid; */
 }
 
+.authentication {
+	width: 100%;
+}
+
 .navigator {
     background-color: #ffffff;
     width: 350px;

@@ -1,12 +1,11 @@
-<div *ngIf="!loggedIn">
-	<app-authentication></app-authentication>
-</div>
-
-<div *ngIf="loggedIn" class="container">
-	<div class="navigator">
+<div class="container">
+	<div *ngIf="!loggedIn" class="authentication">
+		<app-authentication></app-authentication>
+	</div>
+	<div *ngIf="loggedIn" class="navigator">
     	<app-navigator></app-navigator>
   	</div>
- 	<div [hidden]="genericWelcome" class="chat">
+ 	<div *ngIf="loggedIn" [hidden]="genericWelcome" class="chat">
     	<app-chat></app-chat>
 	</div>
 </div>
