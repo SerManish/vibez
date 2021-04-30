@@ -1,7 +1,35 @@
-<div>
-    <form>
-        <input type="text" placeholder="Email">
-        <input type="password" placeholder="password">
-        <button type="button" (click) = "login()">Login</button>
+<div *ngIf="!isSubmitted">
+	<h1>Login</h1>
+    <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+		<p>
+			<label for="handle">Handle</label>
+			<input type="text" id="handle" name="handle" placeholder="handle" required ngModel>
+		</p>
+		<p>
+			<label for="password">Password</label>
+			<input type="password" id="password" name="password" placeholder="password" required ngModel>
+		</p>
+        <button type="submit">Login</button>
+    </form>
+
+	<h1>Signup</h1>
+    <form #signupForm="ngForm" (ngSubmit)="onSignup(signupForm)">
+		<p>
+			<label for="name">Name</label>
+			<input type="text" id="name" name="name" placeholder="name" required ngModel>
+		</p>
+		<p>
+			<label for="email">E-mail</label>
+			<input type="text" id="email" name="email" placeholder="email" required ngModel>
+		</p>
+		<p>
+			<label for="handle">Handle</label>
+			<input type="text" id="handle" name="handle" placeholder="handle" required ngModel>
+		</p>
+		<p>
+			<label for="password">Password</label>
+			<input type="password" id="password" name="password" placeholder="password" required ngModel>
+		</p>
+        <button type="submit">Signup</button>
     </form>
 </div>

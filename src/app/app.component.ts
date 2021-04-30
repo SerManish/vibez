@@ -9,16 +9,16 @@ import { AuthenticationService } from './shared/authentication.service';
 })
 export class AppComponent implements OnDestroy {
 	title = 'vibez';
-	loggedIn = true;
-	loginStatusSubscription : Subscription;
+	loggedIn = false;
+	loginStatusSubscription: Subscription;
 
-  	constructor(private authenticationService : AuthenticationService){
-		this.loginStatusSubscription = authenticationService.loginStatus.subscribe((status)=>{
+	constructor(private authenticationService: AuthenticationService) {
+		this.loginStatusSubscription = authenticationService.loginStatus.subscribe((status) => {
 			this.loggedIn = status;
 		});
-  	}
+	}
 
-  	ngOnDestroy(){
+	ngOnDestroy(): void {
 		this.loginStatusSubscription.unsubscribe();
-  	}
+	}
 }

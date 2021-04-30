@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../shared/authentication.service';
 
 @Component({
@@ -6,16 +8,30 @@ import { AuthenticationService } from '../shared/authentication.service';
 	templateUrl: './authentication.component.html',
 	styleUrls: ['./authentication.component.css']
 })
-export class AuthenticationComponent implements OnInit {
+export class AuthenticationComponent implements OnInit, OnDestroy {
+	isSubmitted: boolean;
+	submitSubscription!: Subscription;
 
-	constructor(private authenticationService: AuthenticationService) { }
+	constructor(private authenticationService: AuthenticationService) {
+		this.isSubmitted = false;
+	}
 
 	ngOnInit(): void {
-	}
-	
-	login()
-	{
-		this.authenticationService.login();
+		this.isSubmitted = false;
+		this.authenticationService.submitted.subscribe((res) => this.isSubmitted = res);
 	}
 
+	onLogin(form: NgForm) {
+		this.authenticationService.submitted.next(true);
+		this.authenticationService.login(form.form.value);
+	}
+
+	onSignup(form: NgForm) {
+		this.authenticationService.submitted.next(true);
+		this.authenticationService.signup(form.form.value);
+	}
+
+	ngOnDestroy(): void {
+		this.submitSubscription.unsubscribe();
+	}
 }

@@ -24,7 +24,7 @@ export class ChatService {
 				new Chat('1',
 					'individual',
 					[
-						new User('1', 'Axay', '../../../../assets/images/default-avatar.png', 'available', 'axay@gmail.com')
+						new User('1', 'Axay', '../../../../assets/images/default-avatar.png', 'available', 'axay@gmail.com', 'axay')
 					],
 					[
 						new Message('1', '1', 'Axay ka chat', new Date()),
@@ -38,7 +38,7 @@ export class ChatService {
 				new Chat('2',
 					'individual',
 					[
-						new User('1', 'Manish', '../../../../assets/images/default-avatar.png', 'available', 'axay@gmail.com')
+						new User('1', 'Manish', '../../../../assets/images/default-avatar.png', 'available', 'mani@gmail.com', 'mani')
 					],
 					[
 						new Message('1', '1', 'dg345234534', new Date()),
