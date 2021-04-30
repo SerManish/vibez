@@ -91,6 +91,7 @@ userSchema.methods.generateToken = async function (){
 // this funtion is called everytime user object is converted into json 
 // this hides tokens array, hashed password and version number 
 // returns user's public data object excluding above mentioned property
+// here standard funtion is used because of this binding 
 userSchema.methods.toJSON = function (){
 	userPublicData = this.toObject();
 	delete userPublicData.tokens;
