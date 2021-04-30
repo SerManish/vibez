@@ -1,9 +1,10 @@
 export class User {
 	constructor(
-		public id: String,
+		public _id: String,
 		public name: String,
 		public profilePicture: String,
 		public status: String,
-        public email: String
+        public email: String,
+		public handle: String
 	) { }
 }

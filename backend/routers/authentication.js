@@ -9,6 +9,7 @@ const router = new express.Router();
 router.post('/signup', async (req, res) => {
     try {
         const user = new User(req.body);
+		console.log(user, req.body);
         user.password = await bcrypt.hash(user.password,8);
         const token = jwt.sign({ _id:user._id }, process.env.SECRET , { expiresIn:'24 hours' });
         user.tokens.push({token});

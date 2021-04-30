@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NavigatorComponent } from './navigator/navigator.component';
@@ -36,7 +38,9 @@ import { AuthenticationComponent } from './authentication/authentication.compone
     AuthenticationComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+	HttpClientModule,
+	FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
