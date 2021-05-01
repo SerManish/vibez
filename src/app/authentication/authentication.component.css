@@ -1,9 +1,17 @@
+* {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
 .container {
 	display: flex;
 	width: 100%;
 	height: 100%;
 	/* debugging */
 	/* border: 1px solid; */
+}
+
+h1 {
+	margin-bottom: 20px;
 }
 
 .left {
@@ -19,32 +27,13 @@
 	/* border: 1px solid; */
 }
 
-/* gradient background */
-/* .left {
-	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-	background-size: 400% 100%;
-	animation: gradient 15s ease infinite;
-}
-
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-} */
-
 .login-btn, .signup-btn {
 	display: flex;
 	align-items: center;
 	width: 50%;
 	height: 8%;
 	padding-left: 10%;
-	border-radius: 10px 0px 0px 10px;
+	/* border-radius: 10px 0px 0px 10px; */
 	color: #ffffff;
 	font-family: Arial, Helvetica, sans-serif;
 	/* debugging */
@@ -62,6 +51,9 @@
 .selected-btn {
 	color: #000000;
 	background-color: #ffffff;
+	/* margin-right: -5%;
+	z-index: 0; */
+	border-radius: 10px 0 0 10px;
 }
 
 .not-selected-btn {
@@ -71,20 +63,89 @@
 .right {
 	display: flex;
 	width: 80%;
+	/* border: 8px solid#1D1F20; */
+	border-left: none;
+	border-radius: 0 10px 10px 0;
+	padding: 20px;
+	overflow: auto;
+
 	/* debugging */
 	/* border: 1px solid; */
 }
 
+/* gradient background */
+.right {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 200%;
+	animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
 .auth-form {
 	margin: auto;
+	width: 50%;
 	border-radius: 10px;
-	padding: 20px;
+	padding: 10px 20px;
 	background-color: #f0f3f6;
 	/* debugging */
 	/* border: 1px solid; */
 }
 
+form {
+	width: 100%;
+	/* debugging */
+	/* border: 1px solid; */
+}
+
 input {
+	width: 100%;
 	outline: none;
 	border: none;
+	padding: 10px;
+}
+
+input:focus {
+	border-bottom: 3px solid #000;
+}
+
+.input-field {
+	width: 80%;
+	margin: 10px auto;
+	/* debugging */
+	/* border: 1px solid; */
+}
+
+label {
+	display: block;
+	padding: 5px;
+	/* debugging */
+	/* border: 1px solid; */
+}
+
+button {
+	margin-top: 20px;
+	width: 30%;
+	border-radius: 15px;
+	color: #ffffff;
+	background: #1D1F20;
+	border: none;
+	padding: 10px 20px 10px 20px;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.btn-disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
 }
