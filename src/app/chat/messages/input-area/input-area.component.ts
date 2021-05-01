@@ -18,6 +18,7 @@ export class InputAreaComponent implements OnInit, OnDestroy {
 		this.chatId = '';
 		this.chatSwitchedSubscription = this.chatService.chatSwitched.subscribe((id) => {
 			this.chatId = id;
+			this.textArea.nativeElement.value = '';
 			this.textArea.nativeElement.focus();
 		});
 	}

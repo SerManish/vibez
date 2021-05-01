@@ -1,35 +1,69 @@
-<div *ngIf="!isSubmitted">
-	<h1>Login</h1>
-    <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
-		<p>
-			<label for="handle">Handle</label>
-			<input type="text" id="handle" name="handle" placeholder="handle" required ngModel>
-		</p>
-		<p>
-			<label for="password">Password</label>
-			<input type="password" id="password" name="password" placeholder="password" required ngModel>
-		</p>
-        <button type="submit">Login</button>
-    </form>
+<div class="container">
+	<div class="left">
+		<div [ngClass]="{'login-btn': true, 'selected-btn': isLoginSelected, 'not-selected-btn': !isLoginSelected}" (click)="selectLogin()">Login</div>
+		<div [ngClass]="{'signup-btn': true, 'selected-btn': !isLoginSelected, 'not-selected-btn': isLoginSelected}" (click)="selectSignup()">Sign Up</div>
+	</div>
+	<div class="right">
+		<div *ngIf="isLoginSelected" class="auth-form">
+			<h1>Login</h1>
+			<form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+				<div class="input-field">
+					<div>
+						<label for="handle">Handle</label>
+					</div>
+					<div>
+						<input class="underline-from-center" type="text" id="handle" name="handle" placeholder="Handle" required ngModel>
+					</div>
+				</div>
+				<div class="input-field">
+					<div>
+						<label for="password">Password</label>
+					</div>
+					<div>
+						<input type="password" id="password" name="password" placeholder="Password" required ngModel>
+					</div>
+				</div>
+				<button [ngClass]="{'btn-disabled':isSubmitted}" [disabled]="isSubmitted" type="submit">Login</button>
+			</form>
+		</div>
 
-	<h1>Signup</h1>
-    <form #signupForm="ngForm" (ngSubmit)="onSignup(signupForm)">
-		<p>
-			<label for="name">Name</label>
-			<input type="text" id="name" name="name" placeholder="name" required ngModel>
-		</p>
-		<p>
-			<label for="email">E-mail</label>
-			<input type="text" id="email" name="email" placeholder="email" required ngModel>
-		</p>
-		<p>
-			<label for="handle">Handle</label>
-			<input type="text" id="handle" name="handle" placeholder="handle" required ngModel>
-		</p>
-		<p>
-			<label for="password">Password</label>
-			<input type="password" id="password" name="password" placeholder="password" required ngModel>
-		</p>
-        <button type="submit">Signup</button>
-    </form>
+		<div *ngIf="!isLoginSelected" class="auth-form">
+			<h1>Signup</h1>
+			<form #signupForm="ngForm" (ngSubmit)="onSignup(signupForm)">
+				<div class="input-field">
+					<div>
+						<label for="name">Name</label>
+					</div>
+					<div>
+						<input type="text" id="name" name="name" placeholder="Name" required ngModel>
+					</div>
+				</div>
+				<div class="input-field">
+					<div>
+						<label for="email">E-mail</label>
+					</div>
+					<div>
+						<input type="text" id="email" name="email" placeholder="Email" required ngModel>
+					</div>
+				</div>
+				<div class="input-field">
+					<div>
+						<label for="handle">Handle</label>
+					</div>
+					<div>
+						<input type="text" id="handle" name="handle" placeholder="Handle" required ngModel>
+					</div>
+				</div>
+				<div class="input-field">
+					<div>
+						<label for="password">Password</label>
+					</div>
+					<div>
+						<input type="password" id="password" name="password" placeholder="Password" required ngModel>
+					</div>
+				</div>
+				<button [ngClass]="{'btn-disabled':isSubmitted}" [disabled]="isSubmitted" type="submit">Signup</button>
+			</form>
+		</div>
+	</div>
 </div>

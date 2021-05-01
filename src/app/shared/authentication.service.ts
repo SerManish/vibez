@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 })
 export class AuthenticationService {
 	loggedIn: boolean;
-	submitted = new Subject<boolean>();
+	authenticating = new Subject<boolean>();
 	loginStatus = new Subject<boolean>();
 
 	constructor(private http: HttpClient) {
@@ -15,58 +15,46 @@ export class AuthenticationService {
 	}
 
 	signup(user: any) {
-		
-		try {
-			const signupURL = '/signup';
-			// console.log('andar ', user);
-			const { name, handle, email, password } = user; 
-			this.http.post(
-				signupURL,
-				{
-					name,
-					handle,
-					email,
-					password
-				}
-			).subscribe((res) => {
-				console.log(res);
-				this.loggedIn = true;
-				this.loginStatus.next(this.loggedIn);
-				this.submitted.next(false);
-			}, (error) => {
-				console.log('error ', error);
-				this.submitted.next(false);
-			});
-		} catch (e) {
-			console.log('error', e);
-			this.submitted.next(false);
-		}
+		const signupURL = '/signup';
+		// console.log('andar ', user);
+		const { name, handle, email, password } = user; 
+		this.http.post(
+			signupURL,
+			{
+				name,
+				handle,
+				email,
+				password
+			}
+		).subscribe((res) => {
+			console.log(res);
+			this.loggedIn = true;
+			this.loginStatus.next(this.loggedIn);
+			this.authenticating.next(false);
+		}, (error) => {
+			console.log('error ', error);
+			this.authenticating.next(false);
+		});
 	}
 
 	login(user: any) {
-		
-		try {
-			const loginURL = '/login';
-			const { handle, password } = user;
-			this.http.post(
-				loginURL,
-				{
-					handle,
-					password
-				}
-			).subscribe((res) => {
-				console.log(res);
-				this.loggedIn = true;
-				this.loginStatus.next(this.loggedIn);
-				this.submitted.next(false);
-			}, (error) => {
-				console.log('error ', error);
-				this.submitted.next(false);
-			});
-		} catch (e) {
-			console.log('error', e);
-			this.submitted.next(false);
-		}
+		const loginURL = '/login';
+		const { handle, password } = user;
+		this.http.post(
+			loginURL,
+			{
+				handle,
+				password
+			}
+		).subscribe((res) => {
+			console.log(res);
+			this.loggedIn = true;
+			this.loginStatus.next(this.loggedIn);
+			this.authenticating.next(false);
+		}, (error) => {
+			console.log('error ', error.error.error);
+			this.authenticating.next(false);
+		});
 	}
 
 	logout() {
