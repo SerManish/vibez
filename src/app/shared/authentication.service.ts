@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { User } from './user.model';
 import jwt_decode from 'jwt-decode';
+import { UserService } from './user.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -12,11 +12,9 @@ export class AuthenticationService {
 	authenticating = new Subject<boolean>();
 	loginStatus = new Subject<boolean>();
 	tryingAutoLogin = new Subject<boolean>();
-	currentUser: User;
 
-	constructor(private http: HttpClient) {
+	constructor(private http: HttpClient, private userService: UserService) {
 		this.loggedIn = false;
-		this.currentUser = new User('','','','','','');
 	}
 
 	autoLogin() {
@@ -85,7 +83,7 @@ export class AuthenticationService {
 	}
 
 	onAuthSuccess(res: any) {
-		this.currentUser = res.user;
+		this.userService.currentUser = res.user;
 		localStorage.setItem('token', res.token);
 		this.loggedIn = true;
 		this.loginStatus.next(this.loggedIn);

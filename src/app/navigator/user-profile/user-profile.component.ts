@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/shared/authentication.service';
 import { User } from 'src/app/shared/user.model';
+import { UserService } from 'src/app/shared/user.service';
 
 @Component({
 	selector: 'app-user-profile',
@@ -10,8 +11,8 @@ import { User } from 'src/app/shared/user.model';
 export class UserProfileComponent implements OnInit {
 
 	user: User;
-	constructor(private authenticationService: AuthenticationService) {
-		this.user = this.authenticationService.currentUser;
+	constructor(private authenticationService: AuthenticationService, private userService: UserService) {
+		this.user = this.userService.currentUser;
 	}
 
 	ngOnInit(): void {
