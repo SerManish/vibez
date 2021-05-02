@@ -73,7 +73,7 @@ userSchema.statics.findByCredentials = async (handle,password) => {
 // returns the generated token
 // here standard funtion is used because of this binding 
 userSchema.methods.generateToken = async function (){
-	const token = jwt.sign({ _id:this._id }, process.env.SECRET , { expiresIn:'24 hours' });
+	const token = jwt.sign({ _id:this._id }, process.env.SECRET , { expiresIn:'15 seconds' });
 	this.tokens.push({token});
 	this.tokens = this.tokens.filter((token) =>{
 		try{
