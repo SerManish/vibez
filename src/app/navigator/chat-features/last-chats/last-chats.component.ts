@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ChatService } from 'src/app/shared/chat.service';
 import { Message } from 'src/app/shared/message.model';
 import { LastChat } from '../../../shared/last-chat.model';
@@ -11,17 +11,18 @@ import { LastChat } from '../../../shared/last-chat.model';
 })
 export class LastChatsComponent implements OnInit, OnDestroy {
 
-	lastChats: LastChat[];
+	lastChats: Map<String, LastChat>;
 	chatReceivedSubscription!: Subscription;
 	lastChatUpdatedSubscription!: Subscription;
 
 	constructor(private chatService: ChatService) {
-		this.lastChats = [];
+		this.lastChats = new Map();
 	}
 
 	populateChats() {
 		this.chatService.getLocalChat().forEach(chat => {
-			this.lastChats.push(
+			this.lastChats.set(
+				chat.id,
 				new LastChat(
 					chat.id,
 					chat.participants[0].profilePicture,
@@ -39,13 +40,8 @@ export class LastChatsComponent implements OnInit, OnDestroy {
 			this.populateChats();
 		});
 		this.lastChatUpdatedSubscription = this.chatService.lastChatUpdated.subscribe((message: Message) => {
-			let index = 0;
-			for (let i = 0; i < this.lastChats.length; i++) {
-				if (this.lastChats[i].chatId == message.chatID) {
-					this.lastChats[i].lastMessage = message.messageContent;
-					break;
-				}
-			}
+			if(this.lastChats.has(message.chatID))
+				this.lastChats.get(message.chatID)!.lastMessage = message.messageContent;
 		});
 	}
 

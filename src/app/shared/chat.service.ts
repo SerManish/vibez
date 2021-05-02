@@ -8,81 +8,61 @@ import { Subject } from 'rxjs';
 	providedIn: 'root'
 })
 export class ChatService {
-	
+
 	chatsReceived = new Subject<any>();
 	chatSwitched = new Subject<String>();
 	lastChatUpdated = new Subject<Message>();
 	closeDetails = new Subject<any>();
 	openDetails = new Subject<any>();
-	
-	private localChats: Chat[];
+
+	private localChats: Map<String, Chat>;
 
 	constructor() {
-		this.localChats = [];
+		this.localChats = new Map();
 		setTimeout(() => {
-			this.localChats = [
-				new Chat('1',
-					'individual',
-					[
-						new User('1', 'Axay', '../../../../assets/images/default-avatar.png', 'available', 'axay@gmail.com', 'axay')
-					],
-					[
-						new Message('1', '1', 'Axay ka chat', new Date()),
-						new Message('2', '1', 'Eccchhhaaaa', new Date()),
-						new Message('1', '1', 'sdlfjdslkj', new Date()),
-						new Message('1', '1', 'sdlfjdslkj', new Date()),
-						new Message('2', '1', 'sdlfjdslkj', new Date()),
-						new Message('2', '1', 'sdlfjdslkj', new Date())
-					]
-				),
-				new Chat('2',
-					'individual',
-					[
-						new User('1', 'Manish', '../../../../assets/images/default-avatar.png', 'available', 'mani@gmail.com', 'mani')
-					],
-					[
-						new Message('1', '1', 'dg345234534', new Date()),
-						new Message('2', '1', '134135345435', new Date()),
-						new Message('1', '1', 'sdlfjdslkj', new Date()),
-						new Message('1', '1', 'sdslkj', new Date()),
-						new Message('2', '1', '39846598734985', new Date()),
-						new Message('2', '1', 'sdl32454fjdslkj', new Date())
-					]
-				)
-			]
+			this.localChats.set('1', new Chat('1',
+				'individual',
+				[
+					new User('1', 'Axay', '../../../../assets/images/default-avatar.png', 'available', 'axay@gmail.com', 'axay')
+				],
+				[
+					new Message('1', '1', 'Axay ka chat', new Date()),
+					new Message('2', '1', 'Eccchhhaaaa', new Date()),
+					new Message('1', '1', 'sdlfjdslkj', new Date()),
+					new Message('1', '1', 'sdlfjdslkj', new Date()),
+					new Message('2', '1', 'sdlfjdslkj', new Date()),
+					new Message('2', '1', 'sdlfjdslkj', new Date())
+				]
+			));
+
+			this.localChats.set('2', new Chat('2',
+				'individual',
+				[
+					new User('1', 'Manish', '../../../../assets/images/default-avatar.png', 'available', 'mani@gmail.com', 'mani')
+				],
+				[
+					new Message('1', '1', 'dg345234534', new Date()),
+					new Message('2', '1', '134135345435', new Date()),
+					new Message('1', '1', 'sdlfjdslkj', new Date()),
+					new Message('1', '1', 'sdslkj', new Date()),
+					new Message('2', '1', '39846598734985', new Date()),
+					new Message('2', '1', 'sdl32454fjdslkj', new Date())
+				]
+			));
 			this.chatsReceived.next();
 		}, 1000);
 	}
 
-	getLocalChat(): Chat[] {
+	getLocalChat(): Map<String, Chat> {
 		return this.localChats;
 	}
 
-	private findChatbyId(chatId : String)
-	{
-		let index = -1;
-		for(let i = 0;i<this.localChats.length;i++)
-		{
-			if(this.localChats[i].id == chatId)
-			{
-				index = i;
-				break;
-			}
-		}
-		return index;
+	getChatByChatId(chatId: String): Chat | undefined {
+		return this.localChats.get(chatId);
 	}
 
-	getChatByChatId(chatId:String) : Chat
-	{
-		return this.localChats[this.findChatbyId(chatId)];
-	}
-
-	sendMessage(message : Message)
-	{
-		let index = this.findChatbyId(message.chatID);
-		if(index == -1)
-			return;
-		this.localChats[index].messages.push(message);
+	sendMessage(message: Message) {
+		this.localChats.get(message.chatID)?.messages.push(message);
 		this.chatSwitched.next(message.chatID);
 		this.lastChatUpdated.next(message);
 	}
