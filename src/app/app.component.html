@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="!tryingAutoLogin" class="container">
 	<div *ngIf="!loggedIn" class="authentication">
 		<app-authentication></app-authentication>
 	</div>

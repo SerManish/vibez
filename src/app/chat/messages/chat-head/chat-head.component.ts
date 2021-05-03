@@ -18,8 +18,9 @@ export class ChatHeadComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.chat = new Chat('0', 'individual', [new User('0','vibez', '', '','','')], []);
-		this.chatSwitchedSubscription = this.chatService.chatSwitched.subscribe((id)=>{
-			this.chat = this.chatService.getChatByChatId(id);
+		
+		this.chatSwitchedSubscription = this.chatService.chatSwitched.subscribe((chat)=>{
+			this.chat = chat;
 		});
 	}
 

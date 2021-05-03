@@ -1,22 +1,65 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import jwt_decode from 'jwt-decode';
+import { UserService } from './user.service';
+import { ChatService } from './chat.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthenticationService {
-	loggedIn: boolean;
 	authenticating = new Subject<boolean>();
 	loginStatus = new Subject<boolean>();
+	tryingAutoLogin = new Subject<boolean>();
 
-	constructor(private http: HttpClient) {
-		this.loggedIn = false;
+	constructor(
+		private http: HttpClient, 
+		private userService: UserService, 
+		private chatService: ChatService
+	) { }
+
+	autoLogin() {
+		this.tryingAutoLogin.next(true);
+		const token = localStorage.getItem('token')?.toString();
+
+		// check if a token is stored in localStorage
+		if(token != null && token != undefined){
+			const decodedToken: any = jwt_decode(token);
+			const currentTime = new Date().getTime();
+
+			// check if token has expired
+			//if expired then remove the token from localStorage
+			if(decodedToken.exp*1000 > currentTime){
+				
+				//get user public profile
+				// currently sending fake user public profile
+				setTimeout(() => {
+					this.onAuthSuccess(
+						{
+							"user": {
+								"status": "offline",
+								"_id": "608f1a453773963be40f3c0b",
+								"name": "a",
+								"handle": "a",
+								"email": "a@a.com"
+							},
+							"token": token
+						}
+					);
+					this.tryingAutoLogin.next(false);
+				}, 1000);
+			}
+			else {
+				localStorage.removeItem('token');
+				this.tryingAutoLogin.next(false);
+			}
+		}
+		else this.tryingAutoLogin.next(false);
 	}
 
 	signup(user: any) {
 		const signupURL = '/signup';
-		// console.log('andar ', user);
 		const { name, handle, email, password } = user; 
 		this.http.post(
 			signupURL,
@@ -27,13 +70,9 @@ export class AuthenticationService {
 				password
 			}
 		).subscribe((res) => {
-			console.log(res);
-			this.loggedIn = true;
-			this.loginStatus.next(this.loggedIn);
-			this.authenticating.next(false);
-		}, (error) => {
-			console.log('error ', error);
-			this.authenticating.next(false);
+			this.onAuthSuccess(res);
+		}, (err) => {
+			this.onAuthFailure(err);
 		});
 	}
 
@@ -47,21 +86,31 @@ export class AuthenticationService {
 				password
 			}
 		).subscribe((res) => {
-			console.log(res);
-			this.loggedIn = true;
-			this.loginStatus.next(this.loggedIn);
-			this.authenticating.next(false);
-		}, (error) => {
-			console.log('error ', error.error.error);
-			this.authenticating.next(false);
+			this.onAuthSuccess(res);
+		}, (err) => {
+			this.onAuthFailure(err);
 		});
 	}
 
 	logout() {
 		setTimeout(() => {
-			this.loggedIn = false;
-			this.loginStatus.next(this.loggedIn);
+			localStorage.removeItem('token');
+			this.chatService.clearChatData();
+			this.loginStatus.next(false);
 		}, 1000);
+	}
+
+	onAuthSuccess(res: any) {
+		this.userService.currentUser = res.user;
+		this.chatService.loadLastChats();
+		localStorage.setItem('token', res.token);
+		this.loginStatus.next(true);
+		this.authenticating.next(false);
+	}
+
+	onAuthFailure(err: any) {
+		console.log(`Error: ${err.error.error}`);
+		this.authenticating.next(false);
 	}
 
 }

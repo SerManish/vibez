@@ -3,87 +3,67 @@ import { Chat } from './chat.model';
 import { Message } from './message.model';
 import { User } from './user.model';
 import { Subject } from 'rxjs';
+import { LastChat } from './last-chat.model';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class ChatService {
-	
-	chatsReceived = new Subject<any>();
-	chatSwitched = new Subject<String>();
+
+	lastChatsReceived = new Subject<any>();
+	chatSwitched = new Subject<Chat>();
 	lastChatUpdated = new Subject<Message>();
 	closeDetails = new Subject<any>();
 	openDetails = new Subject<any>();
-	
-	private localChats: Chat[];
+
+	private localLastChats: Map<String, LastChat>;
+	private localChats: Map<String, Chat>;
 
 	constructor() {
-		this.localChats = [];
+		this.localChats = new Map();
+		this.localLastChats = new Map();
+	}
+
+	loadLastChats(): void {
+		// faking lastChats endpoint
 		setTimeout(() => {
-			this.localChats = [
-				new Chat('1',
-					'individual',
-					[
-						new User('1', 'Axay', '../../../../assets/images/default-avatar.png', 'available', 'axay@gmail.com', 'axay')
-					],
-					[
-						new Message('1', '1', 'Axay ka chat', new Date()),
-						new Message('2', '1', 'Eccchhhaaaa', new Date()),
-						new Message('1', '1', 'sdlfjdslkj', new Date()),
-						new Message('1', '1', 'sdlfjdslkj', new Date()),
-						new Message('2', '1', 'sdlfjdslkj', new Date()),
-						new Message('2', '1', 'sdlfjdslkj', new Date())
-					]
-				),
-				new Chat('2',
-					'individual',
-					[
-						new User('1', 'Manish', '../../../../assets/images/default-avatar.png', 'available', 'mani@gmail.com', 'mani')
-					],
-					[
-						new Message('1', '1', 'dg345234534', new Date()),
-						new Message('2', '1', '134135345435', new Date()),
-						new Message('1', '1', 'sdlfjdslkj', new Date()),
-						new Message('1', '1', 'sdslkj', new Date()),
-						new Message('2', '1', '39846598734985', new Date()),
-						new Message('2', '1', 'sdl32454fjdslkj', new Date())
-					]
-				)
-			]
-			this.chatsReceived.next();
+			this.localLastChats.set('1', new LastChat('1', '', 'Axay', 'this could be different', new Date()));
+			this.localLastChats.set('2', new LastChat('2', '', 'Manish', 'some message', new Date()));
+			this.lastChatsReceived.next(this.localLastChats);
 		}, 1000);
 	}
 
-	getLocalChat(): Chat[] {
-		return this.localChats;
-	}
-
-	private findChatbyId(chatId : String)
-	{
-		let index = -1;
-		for(let i = 0;i<this.localChats.length;i++)
-		{
-			if(this.localChats[i].id == chatId)
-			{
-				index = i;
-				break;
-			}
+	loadChatByChatId(chatId: String): void {
+		if(this.localChats.has(chatId))  this.chatSwitched.next(this.localChats.get(chatId));
+		else {
+			// faking chatById endpoint
+			setTimeout(() => {
+				this.localChats.set(
+					chatId,
+					new Chat(
+						chatId,
+						'individual',
+						[new User('2','anonymous','../../assets/images/default-avatar.png','DND','anonymous@gmail.com','anonymous')],
+						[
+							new Message('1', chatId, `some message in chat ${chatId}`, new Date()),
+							new Message('2', chatId, `some message in chat ${chatId}`, new Date()),
+							new Message('1', chatId, `some message in chat ${chatId}`, new Date())
+						]
+					)
+				);
+				this.chatSwitched.next(this.localChats.get(chatId));
+			}, 1000);
 		}
-		return index;
 	}
 
-	getChatByChatId(chatId:String) : Chat
-	{
-		return this.localChats[this.findChatbyId(chatId)];
-	}
-
-	sendMessage(message : Message)
-	{
-		let index = this.findChatbyId(message.chatID);
-		if(index == -1)
-			return;
-		this.localChats[index].messages.push(message);
-		this.chatSwitched.next(message.chatID);
+	sendMessage(message: Message) {
+		this.localChats.get(message.chatID)?.messages.push(message);
 		this.lastChatUpdated.next(message);
 	}
+
+	clearChatData() {
+		this.localChats.clear();
+		this.localLastChats.clear();
+	}
+
 }

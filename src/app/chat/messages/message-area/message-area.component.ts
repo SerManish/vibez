@@ -14,12 +14,12 @@ export class MessageAreaComponent implements OnInit, OnDestroy {
 	chatSwitchedSubscription: Subscription;
 
 	constructor(private chatService: ChatService) {
-		this.messages = [
-
-		];
+		this.messages = [];
 		this.userID = '1';
-		this.chatSwitchedSubscription = chatService.chatSwitched.subscribe((id) => {
-			this.messages = chatService.getChatByChatId(id).messages;
+		this.chatSwitchedSubscription = chatService.chatSwitched.subscribe((chat) => {
+			if(chat != undefined) {
+				this.messages = chat.messages;
+			}
 		});
 	}
 
