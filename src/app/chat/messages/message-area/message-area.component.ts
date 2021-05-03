@@ -16,10 +16,9 @@ export class MessageAreaComponent implements OnInit, OnDestroy {
 	constructor(private chatService: ChatService) {
 		this.messages = [];
 		this.userID = '1';
-		this.chatSwitchedSubscription = chatService.chatSwitched.subscribe((id) => {
-			const receivedChat = this.chatService.getChatByChatId(id)
-			if(receivedChat != undefined) {
-				this.messages = receivedChat.messages;
+		this.chatSwitchedSubscription = chatService.chatSwitched.subscribe((chat) => {
+			if(chat != undefined) {
+				this.messages = chat.messages;
 			}
 		});
 	}

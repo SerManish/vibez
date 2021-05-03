@@ -1,7 +1,7 @@
 <div class="container">
-    <div *ngFor="let lastChat of lastChats | keyvalue" class="last-chat" (click)="loadMessages(lastChat.value.chatId)">
+    <div *ngFor="let lastChat of lastChats | keyvalue:lastChatsComparator" class="last-chat" (click)="loadMessages(lastChat.value.chatId)">
         <div class="dp">
-            <img [src]="lastChat.value.profilePicture" alt="Display picture of {{ lastChat.value.name }}">
+            <img [src]="lastChat.value.profilePicture || '../../assets/images/default-avatar.png'" alt="Display picture of {{ lastChat.value.name }}">
         </div>
         <div class="name-container">
             <div class="name">{{ lastChat.value.name }}</div>

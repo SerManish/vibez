@@ -22,16 +22,19 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.genericWelcome = true;
 		this.tryingAutoLogin = false;
 		this.loggedIn = false;
+
 		this.loginStatusSubscription = this.authenticationService.loginStatus.subscribe((status) => {
 			this.genericWelcome = true;
 			this.loggedIn = status;
 		});
-		this.chatChangedSubscription = this.chatService.chatSwitched.subscribe((id) => {
+
+		this.chatChangedSubscription = this.chatService.chatSwitched.subscribe(() => {
 			this.genericWelcome = false;
-		})
+		});
+
 		this.tryingLoginSubscription = this.authenticationService.tryingAutoLogin.subscribe((res) => {
 			this.tryingAutoLogin = res;
-		})
+		});
 	}
 
 	ngOnInit(): void {

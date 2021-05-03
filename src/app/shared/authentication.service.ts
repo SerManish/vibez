@@ -3,19 +3,21 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import { UserService } from './user.service';
+import { ChatService } from './chat.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthenticationService {
-	loggedIn: boolean;
 	authenticating = new Subject<boolean>();
 	loginStatus = new Subject<boolean>();
 	tryingAutoLogin = new Subject<boolean>();
 
-	constructor(private http: HttpClient, private userService: UserService) {
-		this.loggedIn = false;
-	}
+	constructor(
+		private http: HttpClient, 
+		private userService: UserService, 
+		private chatService: ChatService
+	) { }
 
 	autoLogin() {
 		this.tryingAutoLogin.next(true);
@@ -26,22 +28,38 @@ export class AuthenticationService {
 			const decodedToken: any = jwt_decode(token);
 			const currentTime = new Date().getTime();
 
-			// console.log(`Current Time : ${currentTime}, Expire Time: ${decodedToken.exp*1000}`);
 			// check if token has expired
 			//if expired then remove the token from localStorage
 			if(decodedToken.exp*1000 > currentTime){
-				this.loginStatus.next(true);
+				
+				//get user public profile
+				// currently sending fake user public profile
+				setTimeout(() => {
+					this.onAuthSuccess(
+						{
+							"user": {
+								"status": "offline",
+								"_id": "608f1a453773963be40f3c0b",
+								"name": "a",
+								"handle": "a",
+								"email": "a@a.com"
+							},
+							"token": token
+						}
+					);
+					this.tryingAutoLogin.next(false);
+				}, 1000);
 			}
 			else {
 				localStorage.removeItem('token');
+				this.tryingAutoLogin.next(false);
 			}
 		}
-		this.tryingAutoLogin.next(false);
+		else this.tryingAutoLogin.next(false);
 	}
 
 	signup(user: any) {
 		const signupURL = '/signup';
-		// console.log('andar ', user);
 		const { name, handle, email, password } = user; 
 		this.http.post(
 			signupURL,
@@ -77,16 +95,16 @@ export class AuthenticationService {
 	logout() {
 		setTimeout(() => {
 			localStorage.removeItem('token');
-			this.loggedIn = false;
-			this.loginStatus.next(this.loggedIn);
+			this.chatService.clearChatData();
+			this.loginStatus.next(false);
 		}, 1000);
 	}
 
 	onAuthSuccess(res: any) {
 		this.userService.currentUser = res.user;
+		this.chatService.loadLastChats();
 		localStorage.setItem('token', res.token);
-		this.loggedIn = true;
-		this.loginStatus.next(this.loggedIn);
+		this.loginStatus.next(true);
 		this.authenticating.next(false);
 	}
 

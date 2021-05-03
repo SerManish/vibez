@@ -16,8 +16,8 @@ export class InputAreaComponent implements OnInit, OnDestroy {
 
 	constructor(private chatService: ChatService) {
 		this.chatId = '';
-		this.chatSwitchedSubscription = this.chatService.chatSwitched.subscribe((id) => {
-			this.chatId = id;
+		this.chatSwitchedSubscription = this.chatService.chatSwitched.subscribe((chat) => {
+			this.chatId = chat.id;
 			this.textArea.nativeElement.value = '';
 			this.textArea.nativeElement.focus();
 		});
