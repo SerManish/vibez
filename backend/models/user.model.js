@@ -100,6 +100,7 @@ userSchema.methods.toJSON = function (){
 	delete userPublicData.tokens;
 	delete userPublicData.password;
 	delete userPublicData.__v;
+	delete userPublicData.chats;
 	return userPublicData;
 }
 
