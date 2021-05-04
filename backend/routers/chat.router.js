@@ -10,13 +10,30 @@ router.post('/test', auth, (req,res)=>{
     res.send({message : "you are authenticated"});
 })
 
+router.get('/chat/all', auth, async (req,res)=>{
+    try{
+        lastChatData = [];
+        await Promise.all(req.user.chats.map(async (_id) => {
+            chat = await Chat.findById(_id);
+            lastChatData.push(chat.messages[chat.messages.length - 1]);
+            console.log(lastChatData)
+        }));
+        res.send(lastChatData);
+    }
+    catch(e){
+        res.status(400).send();
+    }
+    
+});
+
 // endpoint to create a new chat takes all the chat data in body in json form and adds it to the db
-// return the newly created chat object is successful else returns status code 400
+// return the newly created chat id is successful else returns status code 400
 router.post('/chat/create', auth, async (req,res)=>{
     try{
         newChat = new Chat({...req.body});
         await newChat.save();
-        res.send(newChat);
+        await newChat.addChatToUsers();
+        res.send({_id : newChat._id});
     }
     catch(e){
         res.status(400).send();
@@ -31,12 +48,12 @@ router.get('/chat/:id', auth, validChat, (req,res)=>{
 });
 
 // endpoint to add a message to a chat by id and update it in the db
-// return the newly created chat object is successful else returns status code 400
+// return status code 200 else returns status code 400
 router.patch('/chat/:id', auth, validChat, async (req,res)=>{
     try{
         req.chat.messages.push(req.body);
         await req.chat.save();
-        res.send(req.chat);
+        res.send();
     }catch(e){
         res.status(400).send();
     }

@@ -42,7 +42,10 @@ const userSchema = new mongoose.Schema({
 				required : true
 			}
 		}
-	]
+	],
+	chats : {
+		type : [mongoose.Schema.Types.ObjectId]
+	}
 });
 
 // runs everytime before user is saved and hashing the password if it is not hashed yet using bcrypt
@@ -73,7 +76,7 @@ userSchema.statics.findByCredentials = async (handle,password) => {
 // returns the generated token
 // here standard funtion is used because of this binding 
 userSchema.methods.generateToken = async function (){
-	const token = jwt.sign({ _id:this._id }, process.env.SECRET , { expiresIn:'15 seconds' });
+	const token = jwt.sign({ _id:this._id }, process.env.SECRET , { expiresIn:'24 hours' });
 	this.tokens.push({token});
 	this.tokens = this.tokens.filter((token) =>{
 		try{
