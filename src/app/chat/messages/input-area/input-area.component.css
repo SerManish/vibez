@@ -39,7 +39,8 @@ textarea {
 }
 
 .send {
-	background-color: #00a389;
+	/* background-color: #00a389; */
+	background-color: #31708E;
 	color: #ffffff;
 	border-radius: 10px;
 }

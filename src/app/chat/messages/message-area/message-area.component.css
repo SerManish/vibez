@@ -33,7 +33,8 @@
 }
 
 .right {
-	background-color: #bfe8e1;
+	background-color: #8FC1E3;
+	color: #303C6C;
 	align-self: flex-end;
 	border-top-right-radius: 0;
 }
