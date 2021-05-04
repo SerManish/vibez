@@ -7,12 +7,15 @@
 }
 
 .close {
-	color: #00a389;
+    display: flex;
+    justify-content: flex-end;
+	color: #31708E;
 	font-size: 1.5em;
 	/* opacity: 50%; */
 }
 
 .close span {
+    display: block;
 	cursor: pointer;
 }
 
@@ -23,7 +26,7 @@
 }
 
 .profile-pic img {
-    width: 80%;
+    width: 50%;
     display: block;
     margin: auto;
 
@@ -52,8 +55,8 @@
     margin: auto;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     border-radius: 10px;
-    background-color: #bfe8e1;
-    color: #00a389;
+    background-color: #31708E;
+    color: #FFFFFF;
     padding: 5px 10px;
     /* debugging */
     /* border: 1px solid; */

@@ -19,10 +19,13 @@
     width: 10%;
     margin: auto;
     text-align: center;
-    font-size: 1.5em;
+    /* font-size: 1.2em; */
     border-radius: 10px;
-    background-color: #e8f5f3;
-    color: #00a389;
+    background-color: #B4DFE5;
+    color: #31708E;
+    
+    padding: 5px;
+    /* font-weight: 800; */
     /* debugging */
     /* border: 1px solid; */
 }

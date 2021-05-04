@@ -5,6 +5,13 @@
     /* border: 1px solid; */
 }
 
+img {
+    width: 40%;
+    /* debugging */
+    /* border: 1px solid red; */
+}
+
+
 .name {
     margin-left: 20px;
     align-self: center;
