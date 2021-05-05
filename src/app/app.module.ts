@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -18,6 +18,8 @@ import { MessageAreaComponent } from './chat/messages/message-area/message-area.
 import { InputAreaComponent } from './chat/messages/input-area/input-area.component';
 import { ChatHeadComponent } from './chat/messages/chat-head/chat-head.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
+import { AuthInterceptor } from './shared/auth-interceptor';
+import { FindUserComponent } from './navigator/chat-features/add-friend/find-user/find-user.component';
 
 @NgModule({
   declarations: [
@@ -35,14 +37,17 @@ import { AuthenticationComponent } from './authentication/authentication.compone
     MessageAreaComponent,
     InputAreaComponent,
     ChatHeadComponent,
-    AuthenticationComponent
+    AuthenticationComponent,
+    FindUserComponent
   ],
   imports: [
     BrowserModule,
 	HttpClientModule,
 	FormsModule
   ],
-  providers: [],
+  providers: [
+	{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

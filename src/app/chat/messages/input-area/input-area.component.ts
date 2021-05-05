@@ -2,6 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { Subscription } from 'rxjs';
 import { ChatService } from 'src/app/shared/chat.service';
 import { Message } from 'src/app/shared/message.model';
+import { UserService } from 'src/app/shared/user.service';
 
 @Component({
 	selector: 'app-input-area',
@@ -14,7 +15,10 @@ export class InputAreaComponent implements OnInit, OnDestroy {
 	@ViewChild('messageTextArea', { static: true })
 	textArea!: ElementRef;
 
-	constructor(private chatService: ChatService) {
+	constructor(
+		private chatService: ChatService,
+		private userService: UserService
+	) {
 		this.chatId = '';
 		this.chatSwitchedSubscription = this.chatService.chatSwitched.subscribe((chat) => {
 			this.chatId = chat.id;
@@ -34,7 +38,7 @@ export class InputAreaComponent implements OnInit, OnDestroy {
 	sendMessage() {
 		let val = this.textArea.nativeElement.value.trim();
 		if (val.length > 0)
-			this.chatService.sendMessage(new Message('1', this.chatId, val, new Date()));
+			this.chatService.sendMessage(new Message(this.userService.currentUser._id, this.chatId, val, new Date()));
 		this.textArea.nativeElement.value = '';
 	}
 
