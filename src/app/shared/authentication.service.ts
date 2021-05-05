@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import { UserService } from './user.service';
 import { ChatService } from './chat.service';
+import { User } from './user.model';
 
 @Injectable({
 	providedIn: 'root'
@@ -24,31 +25,35 @@ export class AuthenticationService {
 		const token = localStorage.getItem('token')?.toString();
 
 		// check if a token is stored in localStorage
-		if(token != null && token != undefined){
+		if(token != null && token != undefined && token!='undefined'){
 			const decodedToken: any = jwt_decode(token);
 			const currentTime = new Date().getTime();
 
 			// check if token has expired
 			//if expired then remove the token from localStorage
 			if(decodedToken.exp*1000 > currentTime){
-				
-				//get user public profile
-				// currently sending fake user public profile
-				setTimeout(() => {
-					this.onAuthSuccess(
-						{
-							"user": {
-								"status": "offline",
-								"_id": "608f1a453773963be40f3c0b",
-								"name": "a",
-								"handle": "a",
-								"email": "a@a.com"
-							},
-							"token": token
-						}
+				// this.userService.loadCurrentUserData(decodedToken._id);
+				this.userService.getUserById(decodedToken._id)
+				.then((user: any) => {
+					this.userService.currentUser = new User(
+						user._id,
+						user.name,
+						'',
+						user.status,
+						user.email,
+						user.handle
 					);
+					this.chatService.loadLastChats();
+					this.loginStatus.next(true);
+					this.authenticating.next(false);
 					this.tryingAutoLogin.next(false);
-				}, 1000);
+
+				}).catch((err) => {
+					console.log('error: ', err);
+					localStorage.removeItem('token');
+					this.authenticating.next(false);
+					this.tryingAutoLogin.next(false);
+				})
 			}
 			else {
 				localStorage.removeItem('token');
@@ -102,8 +107,8 @@ export class AuthenticationService {
 
 	onAuthSuccess(res: any) {
 		this.userService.currentUser = res.user;
-		this.chatService.loadLastChats();
 		localStorage.setItem('token', res.token);
+		this.chatService.loadLastChats();
 		this.loginStatus.next(true);
 		this.authenticating.next(false);
 	}

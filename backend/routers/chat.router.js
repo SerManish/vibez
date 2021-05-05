@@ -14,9 +14,8 @@ router.get('/chat/all', auth, async (req,res)=>{
     try{
         lastChatData = [];
         await Promise.all(req.user.chats.map(async (_id) => {
-            chat = await Chat.findById(_id);
-            lastChatData.push(chat.messages[chat.messages.length - 1]);
-            console.log(lastChatData)
+            const chat = await Chat.findById(_id);
+            lastChatData.push(chat);
         }));
         res.send(lastChatData);
     }

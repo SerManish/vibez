@@ -1,5 +1,8 @@
 <div class="container">
     <div class="head">Last Chats</div>
-    <div class="add"><i class="fas fa-user-plus"></i></div>
+    <div class="add" (click)="showFindUser = !showFindUser"><i class="fas fa-user-plus"></i></div>
+	<div class="find-user" *ngIf="showFindUser">
+		<app-find-user></app-find-user>
+	</div>
     <div class="three-dots">&#8942;</div>
 </div>

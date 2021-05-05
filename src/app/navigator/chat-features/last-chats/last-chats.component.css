@@ -19,7 +19,7 @@
     /* border: 1px solid; */
 }
 
-.last-chat:hover {
+.selected {
     background: #f0f3f6;
 }
 

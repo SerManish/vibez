@@ -1,7 +1,9 @@
 {
 	"context" : [
 		"/login",
-		"/signup"
+		"/signup",
+		"/user",
+		"/chat"
 	],
 	"target" : "http://localhost:3000",
 	"secure" : false

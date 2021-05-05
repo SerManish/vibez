@@ -30,6 +30,10 @@
     /* border: 1px solid; */
 }
 
+.find-user {
+	position: absolute;
+}
+
 .three-dots {
     width: 15%;
     font-size: 1.5em;

@@ -4,6 +4,8 @@ import { Message } from './message.model';
 import { User } from './user.model';
 import { Subject } from 'rxjs';
 import { LastChat } from './last-chat.model';
+import { HttpClient } from '@angular/common/http';
+import { UserService } from './user.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -19,46 +21,105 @@ export class ChatService {
 	private localLastChats: Map<String, LastChat>;
 	private localChats: Map<String, Chat>;
 
-	constructor() {
+	constructor(
+		private http: HttpClient,
+		private userService: UserService
+	) {
 		this.localChats = new Map();
 		this.localLastChats = new Map();
 	}
 
 	loadLastChats(): void {
-		// faking lastChats endpoint
-		setTimeout(() => {
-			this.localLastChats.set('1', new LastChat('1', '', 'Axay', 'this could be different', new Date()));
-			this.localLastChats.set('2', new LastChat('2', '', 'Manish', 'some message', new Date()));
+		this.http.get<Array<any>>('/chat/all').subscribe((lastChats) => {
+			lastChats.forEach((lastChat)=>{
+				const user0 = lastChat.participants[0];
+				const user1 = lastChat.participants[1];
+				if(user0==this.userService.currentUser._id) [lastChat.participants[0], lastChat.participants[1]] = [user1, user0];
+				const userID = lastChat.participants[0];
+				this.userService.getUserById(userID)
+				.then((user: any) => {
+					const lastMessage = lastChat.messages.length==0?'No messages in Chat':lastChat.messages[lastChat.messages.length-1];
+					this.localLastChats.set(
+						lastChat._id,
+						//change krna hai last message aur date backend se
+						new LastChat(lastChat._id, '', user.name, lastMessage.messageContent, new Date(lastMessage.time || '0'))
+					);
+				}).catch((err) => {
+					console.log('Error: ', err);
+				})
+			});
+
 			this.lastChatsReceived.next(this.localLastChats);
-		}, 1000);
+		});
 	}
 
-	loadChatByChatId(chatId: String): void {
-		if(this.localChats.has(chatId))  this.chatSwitched.next(this.localChats.get(chatId));
+	newChat(user: User) {
+		// console.log('creating new chat with user :', user);
+		this.http.post(
+			'/chat/create',
+			{
+				"type": "individual",
+				"participants": [
+					user._id,
+					this.userService.currentUser._id
+				],
+				"messages": []
+			}
+		).subscribe((newChat: any) => {
+			this.localLastChats.set(
+				newChat._id,
+				new LastChat(
+					newChat._id,
+					user.profilePicture,
+					user.name,
+					'Start of Chat',
+					new Date()
+				)
+			);
+		});
+	}
+
+	loadChatByChatId(lastChat: LastChat): void {
+		if(this.localChats.has(lastChat.chatId))  this.chatSwitched.next(this.localChats.get(lastChat.chatId));
 		else {
-			// faking chatById endpoint
-			setTimeout(() => {
+			this.http.get(`/chat/${lastChat.chatId}`).subscribe((chat: any) => {
 				this.localChats.set(
-					chatId,
+					lastChat.chatId,
 					new Chat(
-						chatId,
-						'individual',
-						[new User('2','anonymous','../../assets/images/default-avatar.png','DND','anonymous@gmail.com','anonymous')],
+						lastChat.chatId,
+						chat.type,
 						[
-							new Message('1', chatId, `some message in chat ${chatId}`, new Date()),
-							new Message('2', chatId, `some message in chat ${chatId}`, new Date()),
-							new Message('1', chatId, `some message in chat ${chatId}`, new Date())
-						]
+							new User(
+								chat.participants[0],
+								lastChat.name,
+								lastChat.profilePicture,
+								'',
+								'',
+								''
+							),
+							this.userService.currentUser
+						],
+						chat.messages
 					)
 				);
-				this.chatSwitched.next(this.localChats.get(chatId));
-			}, 1000);
+				this.chatSwitched.next(this.localChats.get(lastChat.chatId));
+			}, (err) => {
+				console.log("Error", err);
+			})
 		}
 	}
 
+
 	sendMessage(message: Message) {
-		this.localChats.get(message.chatID)?.messages.push(message);
-		this.lastChatUpdated.next(message);
+		this.http.patch(
+			`/chat/${message.chatID}`,
+			message
+		).subscribe(() => {
+			this.localChats.get(message.chatID)?.messages.push(message);
+			this.lastChatUpdated.next(message);
+		}, (err) => {
+			console.log('Error: ', err);
+		})
 	}
 
 	clearChatData() {

@@ -15,15 +15,17 @@ export class LastChatsComponent implements OnInit, OnDestroy {
 	lastChats: Map<String, LastChat>;
 	lastChatReceivedSubscription!: Subscription;
 	lastChatUpdatedSubscription!: Subscription;
+	selectedChatId: String;
 
 	constructor(private chatService: ChatService) {
 		this.lastChats = new Map();
+		this.selectedChatId = '';
 	}
 
 	// keeps last chats sorted according to their lastTime
 	lastChatsComparator = (a: KeyValue<String, LastChat> , b: KeyValue<String, LastChat>) => {
-		const x = a.value.lastTime.getTime();
-		const y = b.value.lastTime.getTime();
+		const x = a.value.lastTime ? a.value.lastTime.getTime():0;
+		const y = b.value.lastTime ? b.value.lastTime.getTime():0;
 		return (x!=y) ? (x>y ? -1 : 1) : 0; 
 	}
 
@@ -42,8 +44,10 @@ export class LastChatsComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	loadMessages(chatId: String) {
-		this.chatService.loadChatByChatId(chatId);
+	loadMessages(lastChat: LastChat) {
+		this.selectedChatId = lastChat.chatId;
+		this.chatService.loadChatByChatId(lastChat);
+		this.chatService.closeDetails.next();
 	}
 
 	ngOnDestroy(): void {
