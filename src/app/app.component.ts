@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from './shared/authentication.service';
+import { MessagingService } from './shared/messaging.service';
 import { ChatService } from './shared/chat.service';
 
 @Component({
@@ -18,7 +19,11 @@ export class AppComponent implements OnInit, OnDestroy {
 	tryingLoginSubscription: Subscription;
 	chatChangedSubscription: Subscription;
 
-	constructor(private authenticationService: AuthenticationService, private chatService: ChatService) {
+	constructor(
+		private authenticationService: AuthenticationService,
+		private chatService: ChatService,
+		private messagingService: MessagingService
+	) {
 		this.genericWelcome = true;
 		this.tryingAutoLogin = false;
 		this.loggedIn = false;

@@ -3,7 +3,9 @@
 		"/login",
 		"/signup",
 		"/user",
-		"/chat"
+		"/chat",
+		"/socket.io"
+
 	],
 	"target" : "http://localhost:3000",
 	"secure" : false
