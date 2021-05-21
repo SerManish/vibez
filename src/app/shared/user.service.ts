@@ -14,21 +14,6 @@ export class UserService {
 		this.loadedRequestedUser = new Subject();
 	}
 
-	loadPublicProfile(id: String) {
-		this.http.get(`/user/${id}`).subscribe((user: any) => {
-			this.loadedRequestedUser.next(
-				new User(
-					user._id,
-					user.name,
-					'',
-					user.status,
-					user.email,
-					user.handle
-				)
-			);
-		});
-	}
-
 	getUserById(id: String) {
 		return this.http.get(`/user/${id}`).toPromise();
 	}

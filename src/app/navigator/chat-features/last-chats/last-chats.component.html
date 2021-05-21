@@ -1,12 +1,12 @@
 <div class="container">
     <div *ngFor="let lastChat of lastChats | keyvalue:lastChatsComparator" [ngClass]='{"last-chat": true, "selected": lastChat.value.chatId==selectedChatId}' (click)="loadMessages(lastChat.value)">
         <div class="dp">
-            <img [src]="lastChat.value.profilePicture || '../../assets/images/default-avatar.png'" alt="Display picture of {{ lastChat.value.name }}">
+            <img [src]="lastChat.value.participants[0].profilePicture || '../../assets/images/default-avatar.png'" alt="Display picture of {{ lastChat.value.participants[0].name }}">
         </div>
         <div class="name-container">
-            <div class="name">{{ lastChat.value.name }}</div>
-            <div class="last-message">{{ lastChat.value.lastMessage }}</div>
+            <div class="name">{{ lastChat.value.participants[0].name }}</div>
+            <div class="last-message">{{ lastChat.value.lastMessage.messageContent }}</div>
         </div>
-        <div class="lastTime">{{ lastChat.value.lastTime | date :'HH:mm' }}</div>
+        <div class="lastTime">{{ lastChat.value.lastMessage.time | date :'HH:mm' }}</div>
     </div>
 </div>

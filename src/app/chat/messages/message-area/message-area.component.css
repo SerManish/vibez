@@ -8,6 +8,12 @@
 	/* border: 1px solid; */
 }
 
+.message-container {
+	display: flex;
+	flex-direction: column;
+	padding: 0 5px;
+}
+
 .message {
 	background-color: #ffffff;
 	border-radius: 15px;

@@ -15,7 +15,13 @@ router.get('/chat/all', auth, async (req,res)=>{
         lastChatData = [];
         await Promise.all(req.user.chats.map(async (_id) => {
             const chat = await Chat.findById(_id);
-            lastChatData.push(chat);
+            const lastMessage = chat.messages[chat.messages.length - 1].toObject();
+            delete lastMessage._id;
+            const chatObject = chat.toObject();
+            delete chatObject.messages;
+            delete chatObject.__v;
+            chatObject.lastMessage = lastMessage;
+            lastChatData.push(chatObject);            
         }));
         res.send(lastChatData);
     }
@@ -43,7 +49,7 @@ router.post('/chat/create', auth, async (req,res)=>{
 // endpoint to get compelete chat by id only if the user is allowed to access
 // returns chat object (it will always be successful due to the use of validChat middleware)
 router.get('/chat/:id', auth, validChat, (req,res)=>{
-    res.send(req.chat);
+    res.send(req.chat.messages);
 });
 
 // endpoint to add a message to a chat by id and update it in the db

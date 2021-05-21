@@ -25,17 +25,13 @@ export class LastChatsComponent implements OnInit, OnDestroy {
 
 	// keeps last chats sorted according to their lastTime
 	lastChatsComparator = (a: KeyValue<String, LastChat> , b: KeyValue<String, LastChat>) => {
-		a.value.lastTime = new Date(a.value.lastTime);
-		b.value.lastTime = new Date(b.value.lastTime);
-		const x = a.value.lastTime ? a.value.lastTime.getTime():0;
-		const y = b.value.lastTime ? b.value.lastTime.getTime():0;
-		return (x!=y) ? (x>y ? -1 : 1) : 0; 
+		const x = a.value.lastMessage.time? a.value.lastMessage.time.getTime():0;
+		const y = b.value.lastMessage.time? b.value.lastMessage.time.getTime():0;
+		return (x!=y) ? (x>y ? -1 : 1) : 0;
 	}
 
 	ngOnInit(): void {
 		this.lastChatReceivedSubscription = this.chatService.lastChatsReceived.subscribe((lastChats : Map<String,LastChat>) => {
-
-			// console.log(lastChats);
 			lastChats.forEach((value, key) => {
 				this.messagingService.join(value.chatId);
 			})
@@ -43,13 +39,13 @@ export class LastChatsComponent implements OnInit, OnDestroy {
 			this.lastChats = lastChats;
 		});
 		
-		this.lastChatUpdatedSubscription = this.chatService.lastChatUpdated.subscribe((message: Message) => {
-			const refLastChat = this.lastChats.get(message.chatID);
-			const newLastChat = new LastChat(refLastChat!.chatId, refLastChat!.profilePicture, refLastChat!.name, message.messageContent, message.time);
+		this.lastChatUpdatedSubscription = this.chatService.lastChatUpdated.subscribe((newMessage) => {
+			const refLastChat = this.lastChats.get(newMessage.chatId);
+			const newLastChat = new LastChat(refLastChat!.chatId, newMessage.message, refLastChat!.type, refLastChat!.participants);
 			
 			// delete and then add a new LastChat object to get the comparator running
-			this.lastChats.delete(message.chatID);
-			this.lastChats.set(message.chatID, newLastChat);
+			this.lastChats.delete(newMessage.chatId);
+			this.lastChats.set(newMessage.chatId, newLastChat);
 		});
 	}
 

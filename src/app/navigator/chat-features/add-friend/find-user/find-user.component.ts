@@ -16,9 +16,8 @@ export class FindUserComponent implements OnInit {
 		private userService: UserService
 	) {
 		this.results = [
-			new User('609ae5a205b67d2288604ca0', 'shivam', '', '', '', ''),
-			new User('609ae5f705b67d2288604ca2', 'manish', '', '', '', ''),
-			new User('609afc3de753921f541df995', 'axay', '', '', '', '')
+			new User('60a7f8fc0d51622358ba3b4b', 'shivam', '', '', '', ''),
+			new User('60a7f8f80d51622358ba3b49', 'manish', '', '', '', '')
 		];
 	}
 

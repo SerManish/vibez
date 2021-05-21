@@ -6,7 +6,7 @@ module.exports = (socket) => {
         console.log('someone joined');
 	})
 
-    socket.on('sendMessage',(message)=>{
-        socket.broadcast.to(message.chatID).emit('receiveMessage',message);
+    socket.on('sendMessage',(message , chatID)=>{
+        socket.broadcast.to(chatID).emit('receiveMessage',message , chatID);
     })
 }

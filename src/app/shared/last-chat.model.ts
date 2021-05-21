@@ -1,9 +1,11 @@
+import { Message } from "./message.model";
+import { User } from "./user.model";
+
 export class LastChat {
 	constructor(
 		public chatId:String,
-		public profilePicture: String,
-		public name: String,
-		public lastMessage: String,
-		public lastTime: Date
+		public lastMessage: Message,
+		public type: String,
+		public participants: User[]
 	) { }
 }

@@ -1,6 +1,8 @@
 <div class="container">
-	<div *ngFor="let message of messages" [ngClass]="{'message': true, 'left': message.senderID!=userID, 'right': message.senderID==userID}">
-		<div class="message-content">{{ message.messageContent }}</div>
-		<div class="time">{{ message.time | date :'HH:mm' }}</div>
+	<div *ngFor="let message of messages" class="message-container">
+		<div *ngIf="message.messageContent !=''" [ngClass]="{'message': true, 'left': message.senderID!=userID, 'right': message.senderID==userID}" >
+			<div class="message-content">{{ message.messageContent }}</div>
+			<div class="time">{{ message.time | date :'HH:mm' }}</div>
+		</div>
 	</div>
 </div>

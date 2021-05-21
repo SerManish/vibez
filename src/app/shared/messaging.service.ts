@@ -12,14 +12,15 @@ export class MessagingService {
 		private chatService: ChatService
 	) {
 		this.socket = io();
-		this.socket.on('receiveMessage', (message) => {
-			this.chatService.storeMessage(message);
+		this.socket.on('receiveMessage', (message, chatId) => {
+			const messageObject: Message = new Message(message.senderID, message.messageContent,new Date(message.time));
+			this.chatService.storeMessage(messageObject, chatId);
 		})
 	}
 
-	sendMessage(message: Message) {
-		this.socket.emit('sendMessage', message);
-		this.chatService.storeMessage(message);
+	sendMessage(message: Message, chatId: String) {
+		this.socket.emit('sendMessage', message, chatId);
+		this.chatService.storeMessage(message, chatId);
 	}
 
 	join(id:String ) {

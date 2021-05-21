@@ -40,7 +40,7 @@ export class InputAreaComponent implements OnInit, OnDestroy {
 	sendMessage() {
 		let val = this.textArea.nativeElement.value.trim();
 		if (val.length > 0)
-			this.messagingService.sendMessage(new Message(this.userService.currentUser._id, this.chatId, val, new Date()));
+			this.messagingService.sendMessage(new Message(this.userService.currentUser._id, val, new Date()), this.chatId);
 		this.textArea.nativeElement.value = '';
 	}
 

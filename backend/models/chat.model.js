@@ -12,7 +12,6 @@ const chatSchema = new mongoose.Schema({
     },
     messages : [{
         senderID : mongoose.Schema.Types.ObjectId,
-        chatID : mongoose.Schema.Types.ObjectId,
         messageContent : String,
         time : Date
     }]

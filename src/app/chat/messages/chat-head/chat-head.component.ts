@@ -33,8 +33,7 @@ export class ChatHeadComponent implements OnInit, OnDestroy {
 	}
 
 	onDetailsOpen() {
-		this.userService.loadPublicProfile(this.chat.participants[0]._id);
-		this.chatService.openDetails.next();
+		this.chatService.openDetails.next(this.chat.participants[0]);
 	}
 
 }

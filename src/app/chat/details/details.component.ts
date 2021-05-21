@@ -11,14 +11,13 @@ import { UserService } from 'src/app/shared/user.service';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
 
-	loadedRequestedUserSubscription: Subscription;
+	openDetailsSubscription: Subscription;
 	user: User;
 	constructor(
-		private chatService: ChatService,
-		private userService: UserService
+		private chatService: ChatService
 	) {
 		this.user = new User('','','','','','');
-		this.loadedRequestedUserSubscription = this.userService.loadedRequestedUser.subscribe(user => {
+		this.openDetailsSubscription = this.chatService.openDetails.subscribe(user => {
 			this.user = user;
 		})
 	}
@@ -27,7 +26,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.loadedRequestedUserSubscription.unsubscribe();
+		this.openDetailsSubscription.unsubscribe();
 	}
 
 	onClose() {
